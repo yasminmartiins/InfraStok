@@ -1,0 +1,164 @@
+/* ==========================
+   HERO
+========================== */
+
+.hero{
+    text-align:center;
+    padding:60px 20px 40px;
+}
+
+.hero-logo{
+    width:170px;
+    margin-bottom:20px;
+}
+
+.hero h2{
+    color:var(--cor-texto);
+    font-size:54px;
+    margin-bottom:20px;
+}
+
+.hero-line{
+    width:70px;
+    height:4px;
+    background:var(--cor-secundaria);
+    border-radius:10px;
+    margin:auto;
+    margin-bottom:25px;
+}
+
+.hero p{
+    max-width:800px;
+    margin:auto;
+    font-size:24px;
+    color:#6f6f7d;
+    line-height:1.6;
+}
+
+/* ==========================
+   CARDS
+========================== */
+
+.cards{
+    width:100%;
+    max-width:1400px;
+    margin:20px auto 60px;
+    padding:0 20px;
+
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    gap:40px;
+}
+
+.cards .card{
+    padding:40px;
+    text-align:center;
+
+    border-top:5px solid var(--cor-primaria);
+
+    transition:.3s;
+    cursor:pointer;
+}
+
+.cards .card:hover{
+    transform:translateY(-8px);
+    border-top-color:var(--cor-secundaria);
+}
+
+.icon-circle{
+    width:110px;
+    height:110px;
+
+    margin:auto;
+    margin-bottom:25px;
+
+    border-radius:50%;
+
+    background:#f3f3f8;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.icon-circle i{
+    font-size:48px;
+    color:var(--cor-primaria);
+}
+
+.cards .card h3{
+    color:var(--cor-texto);
+    font-size:36px;
+    margin-bottom:15px;
+}
+
+.cards .card p{
+    color:var(--cor-texto-secundario);
+    font-size:20px;
+    line-height:1.5;
+    min-height:90px;
+}
+
+/* ==========================
+   EFEITOS
+========================== */
+
+.cards .card:hover .icon-circle{
+    background:#fff6e9;
+}
+
+.cards .card:hover .icon-circle i{
+    color:var(--cor-secundaria);
+}
+
+/* ==========================
+   RESPONSIVO
+========================== */
+
+@media(max-width:900px){
+
+    .hero h2{
+        font-size:42px;
+    }
+
+    .hero p{
+        font-size:20px;
+    }
+}
+
+@media(max-width:600px){
+
+    .hero{
+        padding-top:40px;
+    }
+
+    .hero-logo{
+        width:130px;
+    }
+
+    .hero h2{
+        font-size:34px;
+    }
+
+    .hero p{
+        font-size:18px;
+    }
+
+    .cards .card h3{
+        font-size:28px;
+    }
+
+    .cards .card p{
+        font-size:17px;
+        min-height:auto;
+    }
+
+    .icon-circle{
+        width:90px;
+        height:90px;
+    }
+
+    .icon-circle i{
+        font-size:40px;
+    }
+}

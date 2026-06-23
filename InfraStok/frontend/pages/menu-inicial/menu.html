@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InfraStok</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="menu.css">
+    <link rel="stylesheet" href="../../styles/global.css">
+
+</head>
+
+<body>
+
+    <!-- TOPO -->
+
+    <header id="header"></header>
+
+    <!-- CONTEÚDO -->
+
+    <main>
+
+        <section class="hero">
+
+            <img src="/frontend/assets/logo-infrastok-hello.png" alt="Logo" class="hero-logo">
+
+            <h2>Bem-vindo ao InfraStok</h2>
+
+            <div class="hero-line"></div>
+
+            <p>
+                Sistema de gestão de ativos desenvolvido para centralizar
+                o controle de equipamentos de TI da empresa.
+            </p>
+
+        </section>
+
+        <section class="cards">
+
+            <!-- FUNCIONÁRIO -->
+
+            <div class="card">
+
+                <div class="icon-circle">
+                    <i class="far fa-user"></i>
+                </div>
+
+                <h3>Funcionário</h3>
+
+                <p>
+                    Aparelhos designados a cada funcionário respectivo.
+                </p>
+
+                <a href="funcionarios.html" class="btn">
+                    ACESSAR
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+
+            </div>
+
+            <!-- ATIVOS -->
+
+            <div class="card">
+
+                <div class="icon-circle">
+                    <i class="fas fa-laptop"></i>
+                </div>
+
+                <h3>Ativos</h3>
+
+                <p>
+                    Todos os ativos da empresa, designados ou em estoque.
+                </p>
+
+                <a href="ativos.html" class="btn">
+                    ACESSAR
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+
+            </div>
+
+            <!-- PEDIDOS -->
+
+            <div class="card">
+
+                <div class="icon-circle">
+                    <i class="fas fa-clipboard-list"></i>
+                </div>
+
+                <h3>Pedidos</h3>
+
+                <p>
+                    Pedidos de aparelhos que foram solicitados.
+                </p>
+
+                <a href="pedidos.html" class="btn">
+                    ACESSAR
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- RODAPÉ -->
+
+    <footer id="footer"></footer>
+
+    <script>
+        fetch('/frontend/components/header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header').innerHTML = data;
+            })
+            .catch(error => console.error('Erro ao carregar o header:', error));
+
+        fetch('/frontend/components/footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer').innerHTML = data;
+            })
+            .catch(error => console.error('Erro ao carregar o header:', error));
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Funcionários - InfraStok</title>
+
+    <link rel="stylesheet" href="../../styles/global.css">
+    <link rel="stylesheet" href="funcionarios.css">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+
+    <header id="header"></header>
+
+    <main>
+
+        <section class="page-header">
+
+            <div>
+                <h2>Funcionários</h2>
+                <p>Gerencie os colaboradores e seus ativos.</p>
+            </div>
+
+            <button class="btn">
+                <i class="fa-solid fa-plus"></i>
+                Novo Funcionário
+            </button>
+
+        </section>
+
+        <section class="filtros">
+
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                <input
+                    type="text"
+                    placeholder="Pesquisar funcionário...">
+            </div>
+
+        </section>
+
+        <section class="usuarios-grid">
+
+            <!-- CARD -->
+
+            <div class="usuario-card">
+
+                <div class="usuario-avatar">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+
+                <h3>Yasmin Martins</h3>
+
+                <span class="departamento">
+                    Tecnologia da Informação
+                </span>
+
+                <div class="ativos-info">
+
+                    <i class="fa-solid fa-laptop"></i>
+
+                    3 ativos atribuídos
+
+                </div>
+
+            </div>
+
+            <!-- CARD -->
+
+            <div class="usuario-card">
+
+                <div class="usuario-avatar">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+
+                <h3>João Silva</h3>
+
+                <span class="departamento">
+                    Financeiro
+                </span>
+
+                <div class="ativos-info">
+
+                    <i class="fa-solid fa-laptop"></i>
+
+                    1 ativo atribuído
+
+                </div>
+
+            </div>
+
+            <!-- CARD -->
+
+            <div class="usuario-card">
+
+                <div class="usuario-avatar">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+
+                <h3>Maria Souza</h3>
+
+                <span class="departamento">
+                    Recursos Humanos
+                </span>
+
+                <div class="ativos-info vazio">
+
+                    <i class="fa-solid fa-circle-exclamation"></i>
+
+                    Nenhum ativo
+
+                </div>
+
+            </div>
+
+            <!-- CARD -->
+
+            <div class="usuario-card">
+
+                <div class="usuario-avatar">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+
+                <h3>Carlos Santos</h3>
+
+                <span class="departamento">
+                    Operações
+                </span>
+
+                <div class="ativos-info">
+
+                    <i class="fa-solid fa-laptop"></i>
+
+                    2 ativos atribuídos
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer id="footer"></footer>
+
+    <div id="modalFuncionario" class="modal">
+
+        <div class="modal-content">
+
+            <span class="close-modal">&times;</span>
+
+            <div class="modal-header">
+
+                <div class="avatar-modal">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+
+                <h2 id="nomeFuncionario"></h2>
+
+                <p id="departamentoFuncionario"></p>
+
+            </div>
+
+            <div class="secao">
+                <h3 style="margin-bottom: 15px;">Itens Padrões</h3>
+                
+                <div class="grid-equipamentos">
+                    <div class="equipamento-item">
+                        <div class="equipamento-info">
+                            <i class="fa-solid fa-laptop"></i>
+                            <span>Notebook</span>
+                        </div>
+                        <select id="notebookSelect">
+                            <option value="">Não atribuído</option>
+                        </select>
+                    </div>
+
+                    <div class="equipamento-item">
+                        <div class="equipamento-info">
+                            <i class="fa-solid fa-keyboard"></i>
+                            <span>Teclado e Mouse</span>
+                        </div>
+                        <select id="tecladoSelect">
+                            <option value="">Não atribuído</option>
+                        </select>
+                    </div>
+
+                    <div class="equipamento-item">
+                        <div class="equipamento-info">
+                            <i class="fa-solid fa-desktop"></i>
+                            <span>Periférico</span>
+                        </div>
+                        <select id="perifericoSelect">
+                            <option value="">Não atribuído</option>
+                        </select>
+                    </div>
+
+                    <div class="equipamento-item">
+                        <div class="equipamento-info">
+                            <i class="fa-solid fa-headphones"></i>
+                            <span>Fone</span>
+                        </div>
+                        <select id="foneSelect">
+                            <option value="">Não atribuído</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- EXTRAS -->
+
+            <div class="secao">
+
+                <div class="extras-header">
+
+                    <h3>Adicionais</h3>
+
+
+                </div>
+
+                <div id="extrasContainer">
+
+                </div>
+
+            </div>
+
+            <button
+                class="btn-salvar"
+                onclick="salvarAtribuicoes()">
+
+                Salvar Alterações
+            </button>
+        </div>
+    </div>
+    <script>
+
+    // ===============================
+    // HEADER E FOOTER
+    // ===============================
+
+    fetch('/frontend/components/header.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('header').innerHTML = data;
+        });
+
+    fetch('/frontend/components/footer.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('footer').innerHTML = data;
+        });
+
+    const catalogoExtras = {
+        "HDMI": ["HDMI-001", "HDMI-002", "HDMI-003"],
+        "Cabo USB": ["USB-001", "USB-002"],
+        "SSD": ["SSD-001", "SSD-002"]
+    };
+
+    // ===============================
+    // DADOS MOCKADOS
+    // ===============================
+
+    const funcionarios = {
+
+        "Yasmin Martins": {
+
+            departamento: "Tecnologia da Informação",
+
+            notebook: "NOTE-001",
+            teclado: "KIT-001",
+            periferico: "MON-001",
+            fone: "",
+
+            extras: [
+                {
+                    categoria: "HDMI",
+                    codigo: "HDMI-001"
+                },
+                {
+                    categoria: "Carregador",
+                    codigo: "CAR-003"
+                }
+            ]
+        },
+
+        "João Silva": {
+
+            departamento: "Financeiro",
+
+            notebook: "NOTE-002",
+            teclado: "KIT-002",
+            periferico: "",
+            fone: "",
+
+            extras: []
+        },
+
+        "Maria Souza": {
+
+            departamento: "Recursos Humanos",
+
+            notebook: "",
+            teclado: "",
+            periferico: "",
+            fone: "",
+
+            extras: []
+        },
+
+        "Carlos Santos": {
+
+            departamento: "Operações",
+
+            notebook: "NOTE-004",
+            teclado: "KIT-004",
+            periferico: "MON-004",
+            fone: "FONE-001",
+
+            extras: [
+                {
+                    categoria: "SSD",
+                    codigo: "SSD-005"
+                }
+            ]
+        }
+    };
+
+    // ===============================
+    // ESTOQUE MOCKADO
+    // ===============================
+
+    const estoque = {
+
+        notebook: [
+            "NOTE-001",
+            "NOTE-002",
+            "NOTE-003",
+            "NOTE-004"
+        ],
+
+        teclado: [
+            "KIT-001",
+            "KIT-002",
+            "KIT-003",
+            "KIT-004"
+        ],
+
+        periferico: [
+            "MON-001",
+            "MON-002",
+            "MON-003",
+            "MON-004"
+        ],
+
+        fone: [
+            "FONE-001",
+            "FONE-002",
+            "FONE-003"
+        ]
+    };
+
+    // ===============================
+    // MODAL
+    // ===============================
+
+    const modal =
+        document.getElementById('modalFuncionario');
+
+    const nomeFuncionario =
+        document.getElementById('nomeFuncionario');
+
+    const departamentoFuncionario =
+        document.getElementById('departamentoFuncionario');
+
+    const extrasContainer =
+        document.getElementById('extrasContainer');
+
+    const notebookSelect =
+        document.getElementById('notebookSelect');
+
+    const tecladoSelect =
+        document.getElementById('tecladoSelect');
+
+    const perifericoSelect =
+        document.getElementById('perifericoSelect');
+
+    const foneSelect =
+        document.getElementById('foneSelect');
+
+    let funcionarioAtual = null;
+
+    // ===============================
+    // PREENCHE SELECT
+    // ===============================
+
+    function preencherSelect(select, opcoes){
+
+        select.innerHTML =
+            '<option value="">Não atribuído</option>';
+
+        opcoes.forEach(opcao => {
+
+            select.innerHTML += `
+                <option value="${opcao}">
+                    ${opcao}
+                </option>
+            `;
+        });
+    }
+
+    // ===============================
+    // CARREGA EXTRAS
+    // ===============================
+
+    function carregarExtras(extras) {
+        extrasContainer.innerHTML = '';
+        
+        // Garantir que o container seja grid
+        extrasContainer.style.display = "grid";
+        extrasContainer.style.gridTemplateColumns = "repeat(2, 1fr)";
+        extrasContainer.style.gap = "20px";
+
+        extras.forEach((extra, index) => {
+            const opcoes = itensPorCategoria[extra.categoria] || [];
+            
+            extrasContainer.innerHTML += `
+                <div class="equipamento-item" style="position: relative;">
+                    <i class="fa-solid fa-trash" 
+                    onclick="removerExtra(${index})" 
+                    style="position: absolute; top: 10px; right: 10px; cursor: pointer; color: #ff4d4d; font-size: 14px;"></i>
+                    
+                    <div class="equipamento-info">
+                        <i class="fa-solid fa-plug"></i> <span>${extra.categoria}</span>
+                    </div>
+                    <select onchange="atualizarExtra(${index}, this.value)">
+                        ${opcoes.map(item => `
+                            <option value="${item}" ${extra.codigo === item ? 'selected' : ''}>${item}</option>
+                        `).join('')}
+                    </select>
+                </div>
+            `;
+        });
+
+        // Box pontilhado
+        extrasContainer.innerHTML += `
+            <div class="equipamento-item" style="border: 2px dashed #ddd; cursor: pointer; justify-content: center;" onclick="adicionarNovoExtra()">
+                <i class="fa-solid fa-plus" style="font-size: 24px; color: #ccc;"></i>
+            </div>
+        `;
+    }
+
+    // Função necessária para a lixeira funcionar
+    function removerExtra(index) {
+        funcionarioAtual.extras.splice(index, 1);
+        carregarExtras(funcionarioAtual.extras);
+    }
+
+    // ===============================
+    // ABRIR MODAL
+    // ===============================
+
+        document
+        .querySelectorAll('.usuario-card')
+        .forEach(card => {
+
+            card.addEventListener('click', () => {
+
+                const nome =
+                    card.querySelector('h3').innerText;
+
+                funcionarioAtual =
+                    funcionarios[nome];
+
+                if(!funcionarioAtual){
+                    return;
+                }
+
+                nomeFuncionario.textContent =
+                    nome;
+
+                departamentoFuncionario.textContent =
+                    funcionarioAtual.departamento;
+
+                preencherSelect(
+                    notebookSelect,
+                    estoque.notebook
+                );
+
+                preencherSelect(
+                    tecladoSelect,
+                    estoque.teclado
+                );
+
+                preencherSelect(
+                    perifericoSelect,
+                    estoque.periferico
+                );
+
+                preencherSelect(
+                    foneSelect,
+                    estoque.fone
+                );
+
+                notebookSelect.value =
+                    funcionarioAtual.notebook;
+
+                tecladoSelect.value =
+                    funcionarioAtual.teclado;
+
+                perifericoSelect.value =
+                    funcionarioAtual.periferico;
+
+                foneSelect.value =
+                    funcionarioAtual.fone;
+
+                carregarExtras(
+                    funcionarioAtual.extras
+                );
+
+                modal.classList.add('active');
+            });
+
+        });
+
+        // ===============================
+        // FECHAR MODAL
+        // ===============================
+
+        document
+        .querySelector('.close-modal')
+        .addEventListener('click', () => {
+
+            modal.classList.remove('active');
+
+        });
+
+        window.addEventListener('click', e => {
+
+            if(e.target === modal){
+
+                modal.classList.remove('active');
+            }
+
+        });
+
+        // ===============================
+        // SALVAR
+        // ===============================
+
+        function salvarAtribuicoes(){
+
+            const senha =
+                document.getElementById(
+                    'senhaConfirmacao'
+                ).value;
+
+            if(!senha){
+
+                alert(
+                    'Digite a senha para confirmar.'
+                );
+
+                return;
+            }
+
+            funcionarioAtual.notebook =
+                notebookSelect.value;
+
+            funcionarioAtual.teclado =
+                tecladoSelect.value;
+
+            funcionarioAtual.periferico =
+                perifericoSelect.value;
+
+            funcionarioAtual.fone =
+                foneSelect.value;
+
+            console.log(
+                'Dados para enviar ao backend:',
+                funcionarioAtual
+            );
+
+            alert(
+                'Alterações salvas com sucesso.'
+            );
+
+            modal.classList.remove('active');
+        }
+
+        // Exemplo de catálogo de itens disponíveis por categoria
+        const itensPorCategoria = {
+            "HDMI": ["HDMI-001", "HDMI-002"],
+            "Cabo USB": ["USB-001", "USB-002"],
+            "SSD": ["SSD-001", "SSD-002"],
+            "Carregador": ["CRR-001", "CRR-002"]
+        };
+
+        function carregarExtras(extras) {
+            extrasContainer.innerHTML = '';
+            
+            // Renderiza cada extra como um bloco idêntico ao padrão
+            extras.forEach((extra, index) => {
+                const opcoes = itensPorCategoria[extra.categoria] || [];
+                
+                extrasContainer.innerHTML += `
+                    <div class="equipamento-item">
+                        <div class="equipamento-info">
+                            <i class="fa-solid fa-plug"></i> <span>${extra.categoria}</span>
+                        </div>
+                        <select onchange="atualizarExtra(${index}, this.value)">
+                            ${opcoes.map(item => `
+                                <option value="${item}" ${extra.codigo === item ? 'selected' : ''}>
+                                    ${item}
+                                </option>
+                            `).join('')}
+                        </select>
+                    </div>
+                `;
+            });
+
+            // Box pontilhado para adicionar novo
+            extrasContainer.innerHTML += `
+                <div class="equipamento-item" style="border: 2px dashed #ddd; cursor: pointer; justify-content: center;" onclick="adicionarNovoExtra()">
+                    <img src="/frontend/assets/icone-adicionar.png" alt="Ícone adicionar aparelho extra" style="width: 25px;">
+                </div>
+            `;
+        }
+    </script>
+</body>
+
+</html>
