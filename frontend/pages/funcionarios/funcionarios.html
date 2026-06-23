@@ -150,92 +150,81 @@
     <footer id="footer"></footer>
 
     <div id="modalFuncionario" class="modal">
-
         <div class="modal-content">
-
             <span class="close-modal">&times;</span>
 
-            <div class="modal-header">
-
-                <div class="avatar-modal">
-                    <i class="fa-solid fa-user"></i>
-                </div>
-
-                <h2 id="nomeFuncionario"></h2>
-
-                <p id="departamentoFuncionario"></p>
-
-            </div>
-
-            <div class="secao">
-                <h3 style="margin-bottom: 15px;">Itens Padrões</h3>
+            <div class="modal-body">
                 
-                <div class="grid-equipamentos">
-                    <div class="equipamento-item">
-                        <div class="equipamento-info">
-                            <i class="fa-solid fa-laptop"></i>
-                            <span>Notebook</span>
-                        </div>
-                        <select id="notebookSelect">
-                            <option value="">Não atribuído</option>
-                        </select>
+                <div class="modal-header">
+                    <div class="avatar-modal">
+                        <i class="fa-solid fa-user"></i>
                     </div>
+                    <h2 id="nomeFuncionario"></h2>
+                    <p id="departamentoFuncionario"></p>
+                </div>
 
-                    <div class="equipamento-item">
-                        <div class="equipamento-info">
-                            <i class="fa-solid fa-keyboard"></i>
-                            <span>Teclado e Mouse</span>
+                <div class="secao">
+                    <h3 style="margin-bottom: 15px;">Itens Padrões</h3>
+                    
+                    <div class="grid-equipamentos">
+                        <div class="equipamento-item">
+                            <div class="equipamento-info">
+                                <i class="fa-solid fa-laptop"></i>
+                                <span>Notebook</span>
+                            </div>
+                            <select id="notebookSelect">
+                                <option value="">Não atribuído</option>
+                            </select>
                         </div>
-                        <select id="tecladoSelect">
-                            <option value="">Não atribuído</option>
-                        </select>
-                    </div>
 
-                    <div class="equipamento-item">
-                        <div class="equipamento-info">
-                            <i class="fa-solid fa-desktop"></i>
-                            <span>Periférico</span>
+                        <div class="equipamento-item">
+                            <div class="equipamento-info">
+                                <i class="fa-solid fa-keyboard"></i>
+                                <span>Teclado e Mouse</span>
+                            </div>
+                            <select id="tecladoSelect">
+                                <option value="">Não atribuído</option>
+                            </select>
                         </div>
-                        <select id="perifericoSelect">
-                            <option value="">Não atribuído</option>
-                        </select>
-                    </div>
 
-                    <div class="equipamento-item">
-                        <div class="equipamento-info">
-                            <i class="fa-solid fa-headphones"></i>
-                            <span>Fone</span>
+                        <div class="equipamento-item">
+                            <div class="equipamento-info">
+                                <i class="fa-solid fa-desktop"></i>
+                                <span>Periférico</span>
+                            </div>
+                            <select id="perifericoSelect">
+                                <option value="">Não atribuído</option>
+                            </select>
                         </div>
-                        <select id="foneSelect">
-                            <option value="">Não atribuído</option>
-                        </select>
+
+                        <div class="equipamento-item">
+                            <div class="equipamento-info">
+                                <i class="fa-solid fa-headphones"></i>
+                                <span>Fone</span>
+                            </div>
+                            <select id="foneSelect">
+                                <option value="">Não atribuído</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
+
+                <div class="secao">
+                    <div class="extras-header">
+                        <h3>Adicionais</h3>
+                    </div>
+                    <div id="extrasContainer">
+                        </div>
+                </div>
+
+                <div class="confirmacao">
+                    <input type="password" id="senhaConfirmacao" placeholder="Confirme sua senha para salvar">
+                </div>
+
+                <button class="btn-salvar" onclick="salvarAtribuicoes()">
+                    Salvar Alterações
+                </button>
             </div>
-
-            <!-- EXTRAS -->
-
-            <div class="secao">
-
-                <div class="extras-header">
-
-                    <h3>Adicionais</h3>
-
-
-                </div>
-
-                <div id="extrasContainer">
-
-                </div>
-
-            </div>
-
-            <button
-                class="btn-salvar"
-                onclick="salvarAtribuicoes()">
-
-                Salvar Alterações
-            </button>
         </div>
     </div>
     <script>

@@ -211,33 +211,39 @@ main{
     max-height: 90vh;
     background: white;
     border-radius: 24px;
+    overflow: hidden; /* Garante que nada passe das bordas */
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-body {
     padding: 35px;
-    position: relative;
+    overflow-y: auto;
+    flex: 1; /* Faz ele ocupar o espaço restante */
     
-    /* Garante que o scroll aconteça apenas aqui */
-    overflow-y: auto; 
-    
-    /* Personalização da barra de rolagem (Chrome, Edge, Safari) */
-    scrollbar-width: thin; /* Firefox */
-    scrollbar-color: #d1d1d1 #f1f1f1;
+    /* Adiciona uma margem interna para a barra não encostar na borda */
+    margin: 10px; 
 }
 
-.modal-content::-webkit-scrollbar {
-    width: 8px; /* Largura da barra */
+.modal-body::-webkit-scrollbar {
+    width: 6px !important;
 }
 
-.modal-content::-webkit-scrollbar-track {
-    background: #f1f1f1; 
-    border-radius: 10px;
+.modal-body::-webkit-scrollbar-track {
+    background: transparent !important;
+    margin: 10px 0; /* Isso faz a barra começar um pouco abaixo da borda */
 }
 
-.modal-content::-webkit-scrollbar-thumb {
-    background: #c1c1c1; 
-    border-radius: 10px;
+.modal-body::-webkit-scrollbar-thumb {
+    background-color: #c1c1c1 !important;
+    border-radius: 10px !important;
+    /* Adiciona um espaçamento interno na barra em relação ao canto */
+    border: 2px solid white !important; 
+    background-clip: padding-box; /* Garante que a borda seja respeitada */
 }
 
-.modal-content::-webkit-scrollbar-thumb:hover {
-    background: #a8a8a8; 
+.modal-body::-webkit-scrollbar-thumb:hover {
+    background-color: #a8a8a8 !important;
 }
 
 .close-modal{
