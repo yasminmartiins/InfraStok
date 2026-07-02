@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../styles/global.css">
+    <link rel="stylesheet" href="ativos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <title>Ativos - InfraStok</title>
+</head>
+<body>
+    <header id="header"></header>
+
+    <main class="container" style="padding-top: 40px; padding-bottom: 40px;">
+        <section class="page-header">
+            <div>
+                <h2 class="page-title">Ativos</h2>
+                <p class="page-subtitle">Gerencie o estoque e ativos da empresa por categoria.</p>
+            </div>
+        </section>
+
+        <section class="categorias-grid">
+            <div class="card categoria-card" onclick="window.location.href='detalhes-ativo.html?categoria=Notebooks'">
+                <i class="fa-solid fa-laptop"></i>
+                <h3>Notebooks</h3>
+            </div>
+
+            <div class="card categoria-card" onclick="window.location.href='detalhes-ativo.html?categoria=Teclado e Mouse'">
+                <i class="fa-solid fa-keyboard"></i>
+                <h3>Teclado e Mouse</h3>
+            </div>
+
+            <div class="card categoria-card" onclick="window.location.href='detalhes-ativo.html?categoria=Periféricos'">
+                <i class="fa-solid fa-desktop"></i>
+                <h3>Periféricos</h3>
+            </div>
+
+            <div class="card categoria-card" onclick="window.location.href='detalhes-ativo.html?categoria=Monitores'">
+                <i class="fa-solid fa-display"></i>
+                <h3>Monitores</h3>
+            </div>
+
+            <div class="card categoria-card" onclick="window.location.href='detalhes-ativo.html?categoria=Cabos'">
+                <i class="fa-solid fa-plug"></i>
+                <h3>Cabos e Adaptadores</h3>
+            </div>
+
+            <div class="card categoria-card" onclick="window.location.href='detalhes-ativo.html?categoria=Armazenamento'">
+                <i class="fa-solid fa-hard-drive"></i>
+                <h3>SSD / HDD</h3>
+            </div>
+        </section>
+
+        <section id="areaTabela" class="card" style="padding: 20px; display: none; margin-top: 40px;">
+            <div class="extras-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h3 id="tituloCategoria"></h3>
+                <input type="text" id="filtroAtivos" placeholder="Filtrar por ID ou Funcionário..." style="width: 300px;">
+            </div>
+            <table>
+                <thead id="tableHeader"></thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer id="footer"></footer>
+
+    <script>
+        const bancoAtivos = {
+            "Notebooks": [
+                { modelo: "Dell Latitude 5420", id: "TAG-001", status: "Em estoque", vencimento: "2027-12-01" },
+                { modelo: "Lenovo ThinkPad E14", id: "TAG-002", status: "Atrelado: Yasmin", vencimento: "2026-08-15" }
+            ],
+            "Periféricos": [
+                { marca: "Logitech", id: "PER-001", status: "Em estoque" },
+                { marca: "Microsoft", id: "PER-002", status: "Atrelado: João Silva" }
+            ]
+        };
+
+        async function carregarComponentes() {
+            try {
+                const headerResponse = await fetch('/frontend/components/header.html');
+                document.getElementById('header').innerHTML = await headerResponse.text();
+                const footerResponse = await fetch('/frontend/components/footer.html');
+                document.getElementById('footer').innerHTML = await footerResponse.text();
+            } catch (error) {
+                console.error('Erro ao carregar componentes:', error);
+            }
+        }
+
+        function exibirTabela(categoria) {
+            const areaTabela = document.getElementById('areaTabela');
+            const tableHeader = document.getElementById('tableHeader');
+            const tableBody = document.getElementById('tableBody');
+            
+            document.getElementById('tituloCategoria').textContent = categoria;
+            const itens = bancoAtivos[categoria] || [];
+            
+            // Renderiza cabeçalho e corpo baseado na categoria
+            if (categoria === 'Notebooks') {
+                tableHeader.innerHTML = `<tr><th>Modelo</th><th>ID</th><th>Status</th><th>Garantia</th></tr>`;
+                tableBody.innerHTML = itens.map(i => `<tr><td>${i.modelo}</td><td>${i.id}</td><td>${i.status}</td><td>${i.vencimento}</td></tr>`).join('');
+            } else {
+                tableHeader.innerHTML = `<tr><th>Marca</th><th>ID</th><th>Status</th></tr>`;
+                tableBody.innerHTML = itens.map(i => `<tr><td>${i.marca || 'N/A'}</td><td>${i.id}</td><td>${i.status}</td></tr>`).join('');
+            }
+            
+            areaTabela.style.display = 'block';
+        }
+
+        document.addEventListener('DOMContentLoaded', carregarComponentes);
+    </script>
+</body>
+</html>

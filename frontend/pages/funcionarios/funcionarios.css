@@ -25,7 +25,7 @@ main{
 }
 
 /* PESQUISA */
-
+ 
 .filtros{
     margin-bottom:40px;
 }
@@ -39,7 +39,7 @@ main{
     align-items:center;
     gap:15px;
 
-    box-shadow:var(--sombra-padrao);
+    box-shadow:var(--sombra-padrao)
 }
 
 .search-box i{
@@ -79,6 +79,7 @@ main{
 
 /* Ajuste dos itens individuais */
 .equipamento-item {
+    position: relative;
     display: flex;
     flex-direction: column;
     padding: 20px; /* Borda um pouco maior como solicitado */
@@ -100,6 +101,22 @@ main{
     border-radius: 8px;
     border: 1px solid #ddd;
     margin-top: 10px; /* Espaço entre o label e o select */
+}
+
+/* Cor padrão da lixeira (mais suave) */
+.fa-unlink {
+    color: #b0b0b0 !important;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    cursor: pointer;    
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+
+/* Cor que aparece ao passar o mouse */
+.fa-unlink:hover {
+    color: #ff4d4d !important; /* Vermelho apenas no hover */
 }
 
 /* CARD */
@@ -214,45 +231,44 @@ main{
     overflow: hidden; /* Garante que nada passe das bordas */
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
 .modal-body {
-    padding: 35px;
+    padding: 35px; /* Mantenha o preenchimento interno */
     overflow-y: auto;
-    flex: 1; /* Faz ele ocupar o espaço restante */
-    
-    /* Adiciona uma margem interna para a barra não encostar na borda */
-    margin: 10px; 
+    flex: 1;
+    margin: 0; /* Remova o margin: 10px para evitar o erro visual */
 }
 
 .modal-body::-webkit-scrollbar {
-    width: 6px !important;
+    width: 10px !important;
 }
 
 .modal-body::-webkit-scrollbar-track {
     background: transparent !important;
-    margin: 10px 0; /* Isso faz a barra começar um pouco abaixo da borda */
+    margin: 30px 0 !important;
 }
 
 .modal-body::-webkit-scrollbar-thumb {
     background-color: #c1c1c1 !important;
     border-radius: 10px !important;
-    /* Adiciona um espaçamento interno na barra em relação ao canto */
-    border: 2px solid white !important; 
-    background-clip: padding-box; /* Garante que a borda seja respeitada */
+    /* Aumentando a borda para criar um efeito de espaçamento interno na barra */
+    border: 3px solid white !important; 
+    background-clip: padding-box;
 }
 
 .modal-body::-webkit-scrollbar-thumb:hover {
     background-color: #a8a8a8 !important;
 }
 
-.close-modal{
-    position:absolute;
-    right:20px;
-    top:15px;
-
-    font-size:30px;
-    cursor:pointer;
+.close-modal {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    font-size: 30px;
+    cursor: pointer;
+    z-index: 10; /* Garante que fique acima de outros elementos */
 }
 
 .modal-header{

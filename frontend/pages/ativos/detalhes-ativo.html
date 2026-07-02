@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Ativo - InfraStok</title>
+    <link rel="stylesheet" href="../../styles/global.css">
+    <link rel="stylesheet" href="ativos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+    <header id="header"></header>
+
+    <main class="container" style="padding-top: 40px; padding-bottom: 40px;">
+        <section class="page-header">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <h2 id="tituloCategoria" class="page-title">Carregando...</h2>
+                </div>
+                <!-- Grupo de botões com espaçamento -->
+                <div style="display: flex; gap: 10px;">
+                    <button class="btn" onclick="window.history.back()">
+                        <i class="fa-solid fa-arrow-left"></i> Voltar
+                    </button>
+                    <button class="btn-adicionar" onclick="abrirModal()">
+                        <i class="fa-solid fa-plus"></i> Adicionar
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section class="filtros-painel">
+            <div class="filtro-grupo">
+                <label for="filtroStatus">Status:</label>
+                <select id="filtroStatus" onchange="aplicarFiltros()">
+                    <option value="todos">Todos</option>
+                    <option value="estoque">Em estoque</option>
+                    <option value="atrelado">Atrelados</option>
+                </select>
+            </div>
+
+            <div class="filtro-grupo">
+                <label for="filtroModelo">Modelo:</label>
+                <select id="filtroModelo" onchange="aplicarFiltros()">
+                    <option value="todos">Todos</option>
+                    </select>
+            </div>
+        </section>
+
+        <div id="ativosContainer" class="ativos-grid"></div>
+
+        <section class="container">
+            <div id="ativosContainer" class="ativos-grid"></div>
+        </section>
+
+        <div id="modalAdicionar" class="modal">
+            <div class="modal-content">
+                <h3>Adicionar Novo Ativo</h3>
+                <form id="formNovoItem">
+                    
+                    <!-- Linha 1: Modelo único -->
+                    <div class="form-group">
+                        <label>Modelo do Ativo</label>
+                        <select id="selectModelo" onchange="verificarOutro(this)">
+                            <option value="Dell Latitude 5420">Dell Latitude 5420</option>
+                            <option value="Lenovo ThinkPad E14">Lenovo ThinkPad E14</option>
+                            <option value="outro">Outro...</option>
+                        </select>
+                        <input type="text" id="inputOutro" placeholder="Digite o modelo" style="display:none; margin-top: 10px;">
+                    </div>
+
+                    <!-- Linha 2: Lado a lado -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Service Tag</label>
+                            <input type="text" id="inputTag" placeholder="TAG-000">
+                        </div>
+                        <div class="form-group">
+                            <label>Data da Garantia</label>
+                            <input type="date" id="inputGarantia">
+                        </div>
+                    </div>
+
+                    <!-- Linha 3: Atribuição -->
+                    <div class="form-group">
+                        <label>Atribuído a</label>
+                        <select id="selectPessoa">
+                            <option value="none">Não atribuir</option>
+                            <option value="Yasmin">Yasmin</option>
+                            <option value="João Silva">João Silva</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn-confirmar">Salvar Ativo</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer id="footer"></footer>
+
+    <script>
+
+    function abrirModal() { document.getElementById('modalAdicionar').style.display = 'flex'; }
+
+    function verificarOutro(select) {
+        const inputOutro = document.getElementById('inputOutro');
+        inputOutro.style.display = (select.value === 'outro') ? 'block' : 'none';
+    }
+
+    // Lógica de envio (aqui a senhora atualiza o bancoAtivos)
+    document.getElementById('formNovoItem').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const novoItem = {
+            modelo: document.getElementById('selectModelo').value === 'outro' ? 
+                    document.getElementById('inputOutro').value : document.getElementById('selectModelo').value,
+            id: document.getElementById('inputTag').value,
+            vencimento: document.getElementById('inputGarantia').value,
+            status: document.getElementById('selectPessoa').value === 'none' ? 'Em estoque' : 
+                    'Atrelado: ' + document.getElementById('selectPessoa').value
+        };
+
+        bancoAtivos[categoriaAtual].push(novoItem);
+        document.getElementById('modalAdicionar').style.display = 'none';
+        aplicarFiltros(); // Atualiza a grade instantaneamente
+    });
+
+    let categoriaAtual = "";
+    
+    const bancoAtivos = {
+        "Notebooks": [
+            { modelo: "Dell Latitude 5420", id: "TAG-001", status: "Em estoque", vencimento: "2027-12-01" },
+            { modelo: "Lenovo ThinkPad E14", id: "TAG-002", status: "Atrelado: Yasmin", vencimento: "2026-08-15" }
+        ],
+        "Periféricos": [
+            { marca: "Logitech", id: "PER-001", status: "Em estoque" },
+            { marca: "Microsoft", id: "PER-002", status: "Atrelado: João Silva" }
+        ],
+        "Monitores": [
+            { marca: "Samsung", id: "MON-001", status: "Em estoque" }
+        ]
+    };
+
+    async function carregarComponentes() {
+        try {
+            const headerRes = await fetch('/frontend/components/header.html');
+            document.getElementById('header').innerHTML = await headerRes.text();
+            const footerRes = await fetch('/frontend/components/footer.html');
+            document.getElementById('footer').innerHTML = await footerRes.text();
+        } catch (error) { console.error('Erro ao carregar layout:', error); }
+    }
+
+    function inicializarFiltros() {
+        const selectModelo = document.getElementById('filtroModelo');
+        const itens = bancoAtivos[categoriaAtual] || [];
+        const modelos = [...new Set(itens.map(i => i.modelo || i.marca))];
+        
+        modelos.forEach(m => {
+            const option = document.createElement('option');
+            option.value = m;
+            option.textContent = m;
+            selectModelo.appendChild(option);
+        });
+    }
+
+    function renderizarDetalhes() {
+        const urlParams = new URLSearchParams(window.location.search);
+        categoriaAtual = urlParams.get('categoria'); // Atualiza a variável global
+        document.getElementById('tituloCategoria').textContent = categoriaAtual || "Categoria não encontrada";
+        
+        inicializarFiltros();
+        aplicarFiltros();
+    }
+
+    function aplicarFiltros() {
+        const status = document.getElementById('filtroStatus').value;
+        const modelo = document.getElementById('filtroModelo').value;
+        const container = document.getElementById('ativosContainer');
+        
+        let itens = bancoAtivos[categoriaAtual] || [];
+
+        const filtrados = itens.filter(item => {
+            const matchStatus = status === 'todos' || 
+                               (status === 'estoque' && item.status === 'Em estoque') ||
+                               (status === 'atrelado' && item.status.includes('Atrelado'));
+            const matchModelo = modelo === 'todos' || (item.modelo === modelo || item.marca === modelo);
+            return matchStatus && matchModelo;
+        });
+
+        if (filtrados.length === 0) {
+            container.innerHTML = `
+                <div class="empty-state">
+                    <i class="fa-solid fa-box-open"></i>
+                    <h3>Nenhum item encontrado</h3>
+                    <p>Tente ajustar os filtros selecionados.</p>
+                </div>
+            `;
+        } else {
+            container.innerHTML = filtrados.map(i => {
+                const isEstoque = i.status === 'Em estoque';
+                const classeBolinha = isEstoque ? 'status-estoque' : 'status-atrelado';
+
+                return `
+                    <div class="ativo-card">
+                        <div class="status-indicator ${classeBolinha}" title="${i.status}"></div>
+                        
+                        <!-- Invertido: Título agora é a Service Tag -->
+                        <h4>${i.id}</h4>
+                        
+                        <!-- Invertido: Informação técnica agora é a Marca/Modelo -->
+                        <div class="ativo-info">
+                            <i class="fa-solid fa-laptop"></i> ${i.modelo || i.marca}
+                        </div>
+                        
+                        ${i.vencimento ? `
+                            <div class="ativo-info">
+                                <i class="fa-solid fa-calendar-days"></i> Garantia: ${i.vencimento}
+                            </div>
+                        ` : ''}
+                        
+                        <div class="ativo-status">${i.status}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+    }
+
+    // Adicione este ouvinte no seu script para dar feedback visual
+    document.getElementById('inputGarantia').addEventListener('change', function() {
+        const data = this.value;
+        if (data) {
+            this.style.border = "2px solid var(--cor-primaria)";
+            // A senhora pode até adicionar um pequeno texto abaixo para confirmar
+            console.log("Garantia definida para: " + data);
+        }
+    });
+
+    // Fechar modal ao clicar fora dele
+    window.onclick = function(event) {
+        const modal = document.getElementById('modalAdicionar');
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        carregarComponentes();
+        renderizarDetalhes();
+    });
+</script>
+</body>
+</html>

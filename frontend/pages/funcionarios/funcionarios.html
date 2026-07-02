@@ -217,10 +217,6 @@
                         </div>
                 </div>
 
-                <div class="confirmacao">
-                    <input type="password" id="senhaConfirmacao" placeholder="Confirme sua senha para salvar">
-                </div>
-
                 <button class="btn-salvar" onclick="salvarAtribuicoes()">
                     Salvar Alterações
                 </button>
@@ -418,18 +414,22 @@
         extras.forEach((extra, index) => {
             const opcoes = itensPorCategoria[extra.categoria] || [];
             
+            // Adicionamos a classe 'equipamento-item' e o ícone de lixeira com um evento de clique
             extrasContainer.innerHTML += `
-                <div class="equipamento-item" style="position: relative;">
-                    <i class="fa-solid fa-trash" 
+                <div class="equipamento-item">
+                    <i class="fa-solid fa-unlink" 
                     onclick="removerExtra(${index})" 
-                    style="position: absolute; top: 10px; right: 10px; cursor: pointer; color: #ff4d4d; font-size: 14px;"></i>
+                    style="position: absolute; top: 15px; right: 15px; cursor: pointer; color: #b0b0b0; font-size: 14px; transition: color 0.2s;">
+                    </i>
                     
                     <div class="equipamento-info">
                         <i class="fa-solid fa-plug"></i> <span>${extra.categoria}</span>
                     </div>
                     <select onchange="atualizarExtra(${index}, this.value)">
                         ${opcoes.map(item => `
-                            <option value="${item}" ${extra.codigo === item ? 'selected' : ''}>${item}</option>
+                            <option value="${item}" ${extra.codigo === item ? 'selected' : ''}>
+                                ${item}
+                            </option>
                         `).join('')}
                     </select>
                 </div>
@@ -446,8 +446,8 @@
 
     // Função necessária para a lixeira funcionar
     function removerExtra(index) {
-        funcionarioAtual.extras.splice(index, 1);
-        carregarExtras(funcionarioAtual.extras);
+        funcionarioAtual.extras.splice(index, 1); // Remove o item do array
+        carregarExtras(funcionarioAtual.extras);   // Atualiza a visualização
     }
 
     // ===============================
@@ -589,37 +589,6 @@
             "SSD": ["SSD-001", "SSD-002"],
             "Carregador": ["CRR-001", "CRR-002"]
         };
-
-        function carregarExtras(extras) {
-            extrasContainer.innerHTML = '';
-            
-            // Renderiza cada extra como um bloco idêntico ao padrão
-            extras.forEach((extra, index) => {
-                const opcoes = itensPorCategoria[extra.categoria] || [];
-                
-                extrasContainer.innerHTML += `
-                    <div class="equipamento-item">
-                        <div class="equipamento-info">
-                            <i class="fa-solid fa-plug"></i> <span>${extra.categoria}</span>
-                        </div>
-                        <select onchange="atualizarExtra(${index}, this.value)">
-                            ${opcoes.map(item => `
-                                <option value="${item}" ${extra.codigo === item ? 'selected' : ''}>
-                                    ${item}
-                                </option>
-                            `).join('')}
-                        </select>
-                    </div>
-                `;
-            });
-
-            // Box pontilhado para adicionar novo
-            extrasContainer.innerHTML += `
-                <div class="equipamento-item" style="border: 2px dashed #ddd; cursor: pointer; justify-content: center;" onclick="adicionarNovoExtra()">
-                    <img src="/frontend/assets/icone-adicionar.png" alt="Ícone adicionar aparelho extra" style="width: 25px;">
-                </div>
-            `;
-        }
     </script>
 </body>
 
